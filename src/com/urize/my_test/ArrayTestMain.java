@@ -7,6 +7,8 @@ public class ArrayTestMain {
         someString[0] = "lll";
         someString[1] = "mmm";
         someString[2] = "nnn";
+        someString[5] = "nnn";
+        someString[5] = "nnn";
         System.out.println(showIndex("lll"));
     }
 
