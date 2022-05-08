@@ -1,14 +1,9 @@
-package com.urize.webapp;
-
-import com.urize.webapp.model.Resume;
-import com.urize.webapp.storage.ArrayStorage;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Interactive test for com.urize.webapp.storage.ArrayStorage implementation
+ * Interactive test for ArrayStorage implementation
  * (just run, no need to understand)
  */
 public class MainArray {
@@ -37,7 +32,7 @@ public class MainArray {
                     break;
                 case "save":
                     r = new Resume();
-                    r.setUuid(uuid);
+                    r.uuid = uuid;
                     ARRAY_STORAGE.save(r);
                     printAll();
                     break;
