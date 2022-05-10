@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
+public class ArrayStorage implements Storage {
     private static final int STORAGE_LIMIT = 10000;
 
     Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -18,24 +18,47 @@ public class ArrayStorage {
         size = 0;
     }
 
-    public void save(Resume r) {
-        if (size >= storage.length) {
-            storage = Arrays.copyOf(storage, storage.length * 2);
+    @Override
+    public void update(Resume r) {
+        int index = getIndex(r.getUuid());
+        if (index == -1) {
+            System.out.println("Resume " + r.getUuid() + " not exist");
+        } else {
+            storage[index] = r;
         }
-        storage[size] = r;
-        size++;
+    }
+
+    public void save(Resume r) {
+        int index = getIndex(r.getUuid());
+        if (index != -1) {
+            System.out.println("Resume " + r.getUuid() + " exist");
+        } else if (size == storage.length) {
+            System.out.println("Storage overflow");
+        } else {
+            storage[size] = r;
+            size++;
+        }
     }
 
     public Resume get(String uuid) {
-        int index = returnIndexByUuid(uuid);
+        int index = getIndex(uuid);
+        if (index == -1) {
+            System.out.println("Resume " + uuid + " not exist");
+            return null;
+        }
         return storage[index];
     }
 
     public void delete(String uuid) {
-        int indexDelete = returnIndexByUuid(uuid);
-        if (size - 1 - indexDelete >= 0)
-            System.arraycopy(storage, indexDelete + 1, storage, indexDelete, size - 1 - indexDelete);
-        size--;
+        int index = getIndex(uuid);
+        if (index == -1) {
+            System.out.println("Resume " + uuid + " not exist");
+
+        } else {
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
+        }
     }
 
     /**
@@ -49,14 +72,13 @@ public class ArrayStorage {
         return size;
     }
 
-    private int returnIndexByUuid(String uuid) {
-        int index = 0;
-        for (int i = 0; i < storage.length; i++) {
+    private int getIndex(String uuid) {
+
+        for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
-                index = i;
-                break;
+                return i;
             }
         }
-        return index;
+        return -1;
     }
 }
