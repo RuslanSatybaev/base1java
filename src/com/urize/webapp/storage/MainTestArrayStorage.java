@@ -2,8 +2,10 @@ package com.urize.webapp.storage;
 
 import com.urize.webapp.model.Resume;
 
+import java.util.Arrays;
+
 public class MainTestArrayStorage {
-    static final Storage ARRAY_STORAGE = new ArrayStorage();
+    static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
         Resume r1 = new Resume();
@@ -20,9 +22,9 @@ public class MainTestArrayStorage {
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
-        ARRAY_STORAGE.update(r3);
+        //      ARRAY_STORAGE.update(r3);
         printAll();
-        ARRAY_STORAGE.delete(r1.getUuid());
+        ARRAY_STORAGE.delete(r2.getUuid());
         printAll();
         ARRAY_STORAGE.clear();
         printAll();
